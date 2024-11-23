@@ -1,7 +1,7 @@
 from config import db
 
 class Todo(db.Model):
-    id = db.Column(db.Integer, primasryu_key=True) #Unique
+    id = db.Column(db.Integer, primary_key=True) #Unique
     date = db.Column(db.String(80), unique=False, nullable=False)
     task = db.Column(db.String(80), unique=False, nullable=False)
 
