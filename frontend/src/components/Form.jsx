@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 
-const Form = () => {
-  const [date, setDate] = useState("");
-  const [task, setTask] = useState("");
+const Form = ({ existingTask = {}, updateCallback }) => {
+  const [date, setDate] = useState(existingTask.date || "");
+  const [task, setTask] = useState(existingTask.task || "");
+
+  const updating = Object.entries(existingTask).length !== 0;
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -10,9 +12,11 @@ const Form = () => {
       date,
       task,
     };
-    const url = `http://127.0.0.1:5000/create_task`;
+    const url =
+      `http://127.0.0.1:5000/` +
+      (updating ? `update_task/${existingTask.id}` : "create_task");
     const options = {
-      method: "POST",
+      method: updating ? "PATCH" : "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -23,6 +27,8 @@ const Form = () => {
       const data = await res.json();
       alert(data.msg);
     } else {
+      console.log(await res.json());
+      updateCallback();
     }
   };
 
@@ -48,7 +54,7 @@ const Form = () => {
           onChange={(e) => setTask(e.target.value)}
         />
       </div>
-      <input type="submit" value="Create Task" />
+      <button type="submit">{updating ? "Update" : "Create"}</button>
     </form>
   );
 };

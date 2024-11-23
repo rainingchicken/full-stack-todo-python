@@ -1,6 +1,6 @@
 import React from "react";
 
-const TodoList = ({ tasks }) => {
+const TodoList = ({ tasks, updateTask, updateCallback }) => {
   return (
     <div>
       <h1>Todo</h1>
@@ -19,7 +19,7 @@ const TodoList = ({ tasks }) => {
                 <td>{task.date}</td>
                 <td>{task.task}</td>
                 <td>
-                  <button>UPDATE</button>
+                  <button onClick={() => updateTask(task)}>UPDATE</button>
                   <button>DELETE</button>
                 </td>
               </tr>
