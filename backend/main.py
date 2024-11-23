@@ -26,7 +26,7 @@ def create_task():
     
     return jsonify({"msg": "Task created successfully"}), 201
 
-@app.route("/update_task/<int:id>")
+@app.route("/update_task/<int:id>", methods=["PATCH"])
 def update_task(id):
     task = Todo.query.get(id)
 
@@ -40,6 +40,18 @@ def update_task(id):
     db.session.commit()
 
     return jsonify({"msg": "Task updated succcessfully!"}), 200
+
+@app.route('/delete_task/<int:id>', methods= ['DELETE'])
+def delete_task(id):
+    task = Todo.query.get(id)
+
+    if not task:
+        return jsonify({"msg": "Task not found"}), 404
+    
+    db.session.delete(task)
+    db.session.commit()
+
+    return jsonify({"msg": "Task deleted succcessfully!"}), 200
 
 if __name__ == '__main__':
     with app.app_context():
