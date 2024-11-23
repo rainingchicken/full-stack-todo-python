@@ -9,6 +9,7 @@ const TodoList = ({ tasks }) => {
           <tr>
             <th>Date</th>
             <th>Task</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
