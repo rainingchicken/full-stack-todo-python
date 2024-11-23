@@ -11,7 +11,7 @@ const App = () => {
     const res = await fetch(`http://127.0.0.1:5000/tasks`);
     const data = await res.json();
     setTasks(data.tasks);
-    console.log(data.tasks);
+    // console.log(data.tasks);
   };
 
   useEffect(() => {

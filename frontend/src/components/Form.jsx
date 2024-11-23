@@ -27,7 +27,7 @@ const Form = ({ existingTask = {}, updateCallback }) => {
       const data = await res.json();
       alert(data.msg);
     } else {
-      console.log(await res.json());
+      // console.log(await res.json());
       updateCallback();
     }
   };
