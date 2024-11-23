@@ -14,7 +14,7 @@ def create_task():
     task = request.json.get("task")
 
     if not date or not task:
-        return (jsonify({"msg": "You must include date and task"}), 400)
+        return jsonify({"msg": "You must include date and task"}), 400
     
     new_task = Todo(date=date, task=task)
 
@@ -24,7 +24,22 @@ def create_task():
     except Exception as e:
         return jsonify({"msg": str(e)}, 400)
     
-    return jsonify({"msg": "Task created successfully"}, 201)
+    return jsonify({"msg": "Task created successfully"}), 201
+
+@app.route("/update_task/<int:id>")
+def update_task(id):
+    task = Todo.query.get(id)
+
+    if not task:
+        return jsonify({"msg": "Task not found"}), 404
+    
+    data = request.json
+    task.date = data.get("date", task.date)
+    task.task = data.get("task", task.task)
+
+    db.session.commit()
+
+    return jsonify({"msg": "Task updated succcessfully!"}), 200
 
 if __name__ == '__main__':
     with app.app_context():
